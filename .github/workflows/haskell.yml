@@ -6,7 +6,7 @@ jobs:
     container:
       image: alpine:latest
       volumes:
-      - "${{env.GITHUB_WORKSPACE}}:/repo"
+      - "${{ github.workspace }}:/repo"
     steps:
     - uses: actions/checkout@v2
     - name: "Generate temporary reusable workflow"
@@ -15,4 +15,4 @@ jobs:
         entrypoint: dhall-to-yaml-ng
         args: "--file /repo/config/build.dhall --output /repo/.github/workflows/build.yml"
     - name: "Runs generated reusable workflow"
-      uses: "${{env.GITHUB_REPOSITORY}}/.github/workflows/build.yml@${{env.GITHUB_SHA}}"
+      uses: "${{ github.sha }}/.github/workflows/build.yml@${{env.GITHUB_SHA}}"
