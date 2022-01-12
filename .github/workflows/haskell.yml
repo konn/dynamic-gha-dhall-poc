@@ -1,0 +1,18 @@
+on: [push]
+name: build
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    container:
+      image: alpine:latest
+      volumes:
+      - "${{env.GITHUB_WORKSPACE}}:/repo"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "Generate temporary reusable workflow"
+      uses: docker://dhallhaskell/dhall-yaml:latest
+      with:
+        entrypoint: dhall-to-yaml-ng
+        args: "--file /repo/config/build.dhall --output /repo/.github/workflows/build.yml"
+    - name: "Runs generated reusable workflow"
+      uses: "${{env.GITHUB_REPOSITORY}}/.github/workflows/build.yml@${{env.ffac537e6cbbf934b08745a378932722df287a53}}"
