@@ -15,4 +15,4 @@ jobs:
         entrypoint: dhall-to-yaml-ng
         args: "--file /repo/config/build.dhall --output /repo/.github/workflows/build.yml"
     - name: "Runs generated reusable workflow"
-      uses: "${{ github.repository }}/.github/workflows/build.yml@${{github.sha}}"
+      uses: ./.github/workflows/build.yml@${{github.sha}}"
